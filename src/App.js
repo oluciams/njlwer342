@@ -1,26 +1,43 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-/// Modifica el componente para que se puedan agregar tareas
 
-class App extends Component {
-  render() {
+const App= ()=> {
+
+  const [task, setTask] = useState('');
+  const [tasks, setTasks] = useState(['Sacar la ropa', 'Hacer la cama', 'Leer un rato']);
+
+  const handleTask = (e)=>{
+    const newTask = e.target.value
+    setTask(newTask) 
+  }
+
+  const handleOnSubmit = (e)=>{
+    e.preventDefault()    
+    setTasks([...tasks, task])
+    setTask('')
+  } 
+
+   
     return (
       <div className="wrapper">
         <div className="list">
           <h3>Por hacer:</h3>
           <ul className="todo">
-            <li>Sacar la ropa</li>
-            <li>Hacer la cama</li>
-            <li>Leer un rato</li>
+            {tasks.map((task, index)=>
+              <li key={index}>{task}</li>            
+            )}            
           </ul>
-           <form>
-             <input type="text" id="new-task" placeholder="Ingresa una tarea y oprime Enter" />
+           <form onSubmit={handleOnSubmit}>
+             <input value={task} onChange={handleTask} type="text" id="new-task" placeholder="Ingresa una tarea y oprime Enter" />
            </form>
         </div>
       </div>
     )
-  }
+  
 }
 
 
 export default App;
+
+
+
